@@ -1,8 +1,13 @@
+management:
+  endpoint:
+    web:
+      exposure:
+        include: "*"
 
-contacts:
-  filepath: contacts.csv
+
+
 server:
-  port: 8080
+  port: 8081
 
 eureka:
   client:
@@ -15,7 +20,7 @@ eureka:
 
 spring:
   application:
-    name: eureka-client
+    name: testsproject
   datasource:
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://localhost:5433/postgres
