@@ -1,0 +1,53 @@
+server:
+  # Порт, на котором будет запускаться веб-сервер (по умолчанию 8080)
+  port: 8080
+
+spring:
+  datasource:
+    # Драйвер базы данных PostgreSQL
+    driver-class-name: org.postgresql.Driver
+    # URL подключения к базе данных
+    url: jdbc:postgresql://localhost:5433/postgres
+    # Имя пользователя для подключения к базе
+    username: postgres
+    # Пароль пользователя для подключения к базе
+    password: postgres
+
+  jpa:
+    # Настройки JPA / Hibernate
+    properties:
+      hibernate:
+        # Диалект Hibernate для PostgreSQL
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+      # Контекст текущей сессии (неполная строка, скорее всего нужно исправить 'threa' → 'thread')
+      current_session_context_class: threa
+      # Разрешает ленивую загрузку вне транзакции
+      enable_lazy_load_no_trans: true
+    # Показывать SQL-запросы в консоли
+    show-sql: true
+    # Генерировать DDL автоматически (создание/обновление таблиц)
+    generate-ddl: true
+    hibernate:
+      # Автоматическое обновление схемы базы данных
+      ddl-auto: update
+
+  # ================================================
+  # Настройки Kafka и Spring Cloud Stream
+  # ================================================
+  cloud:
+    function:
+      # Определение функций: consumer и producer
+      definition: consumer;producer
+    stream:
+      kafka:
+        binder:
+          # Адрес брокера Kafka
+          brokers: localhost:29092
+      bindings:
+        # Поток входящих сообщений (consumer)
+        consumer-in-0:
+          destination: consumer-topic
+        # Поток исходящих сообщений (producer)
+        producer-out-0:
+          destination: producer-topic
+
